@@ -1,0 +1,323 @@
+<link rel="shortcut icon" type="image/png" href="https://i.ibb.co/hHRmGvm/lixify-1.png">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlixMovies</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica', sans-serif;
+        }
+        body {
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        /* (No changes needed) */
+
+        /* Header */
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #111;
+            border-bottom: 2px solid #f00;
+            box-shadow: 0 2px 8px rgba(255, 0, 0, 0.4);
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #f00;
+            letter-spacing: 2px;
+        }
+        .nav-links a {
+            color: #fff;
+            margin-left: 1.5rem;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #f00;
+        }
+        .profile-icon {
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            background: url('https://images.unsplash.com/photo-1603046891863-69be7b7c58d8?auto=format&fit=crop&w=1350&q=80') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #f00;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: #fff;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            letter-spacing: 3px;
+        }
+        .hero p {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            max-width: 600px;
+            color: #eee;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 2.5rem;
+            margin: 2rem 0;
+            color: #f00;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+        }
+
+        /* Movie Grid */
+        .movies {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjusted for Netflix sizing */
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+        .movie-card {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            background-color: #222;
+        }
+        .movie-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.5);
+        }
+        .movie-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .movie-card-info {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            color: #f00;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            font-size: 1rem;
+        }
+        .movie-card:hover .movie-card-info {
+            transform: translateY(0);
+        }
+        .movie-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+        }
+        .movie-desc {
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+        .play-button {
+            font-size: 1.5rem;
+            color: #f00;
+            margin-top: 0.5rem;
+            cursor: pointer;
+        }
+
+        /* Modal, Footer, and Other Styles */
+        /* (No changes needed) */
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -250px;
+            width: 250px;
+            height: 100%;
+            background: #111;
+            padding: 20px;
+            transition: right 0.3s;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+            z-index: 1002;
+        }
+        .sidebar.open {
+            right: 0;
+        }
+        .sidebar h2 {
+            margin-bottom: 1rem;
+        }
+        .sidebar .warning {
+            color: #f00;
+            font-weight: bold;
+        }
+        .heart-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #f00;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: none; /* Hide by default */
+        }
+        /* Modal & Footer continue as before! */
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">FlixMovies</div>
+        <nav class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Movies</a>
+            <a href="#">Series</a>
+            <a href="#">Genres</a>
+        </nav>
+        <i class="fas fa-user-circle profile-icon" id="profileIcon"></i>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Stream the best!</h1>
+            <p>Explore a curated collection of top movies and series from around the world, all in one platform. All for free!</p>
+        </div>
+    </section>
+
+    <!-- Movies Section -->
+    <section>
+        <h2 class="section-title">Featured Movies</h2>
+        <div class="movies">
+            <div class="movie-card" onclick="openMovie('garfield-movie-2024.html')">
+                <img src="https://th.bing.com/th/id/OIP.lF4sU8t1DdMcBBTFUelWBQAAAA?rs=1&pid=ImgDetMain" alt="Movie 1">
+                <i class="fas fa-heart heart-icon" onclick="addToMyList(event)"></i>
+                <div class="movie-card-info">
+                    <h3 class="movie-title">Garfield Movie</h3>
+                    <p class="movie-desc">A computer-animated adventure comedy film about Garfield and his reunion with his long-lost father.</p>
+                    <div class="play-button">▶ Play</div>
+                </div>
+            </div>
+            <div class="movie-card" onclick="openMovie('movie2.html')">
+                <img src="https://images.unsplash.com/photo-1512099113899-d5a4f63f6d43?auto=format&fit=crop&w=500&q=80" alt="Movie 2">
+                <i class="fas fa-heart heart-icon" onclick="addToMyList(event)"></i>
+                <div class="movie-card-info">
+                    <h3 class="movie-title">Neon Skies</h3>
+                    <p class="movie-desc">A story of light against darkness.</p>
+                    <div class="play-button">▶ Play</div>
+                </div>
+            </div>
+            <div class="movie-card" onclick="openMovie('movie3.html')">
+                <img src="https://images.unsplash.com/photo-1543466835-00a7907eae2f?auto=format&fit=crop&w=500&q=80" alt="Movie 3">
+                <i class="fas fa-heart heart-icon" onclick="addToMyList(event)"></i>
+                <div class="movie-card-info">
+                    <h3 class="movie-title">Beyond Tomorrow</h3>
+                    <p class="movie-desc">A journey into the unknown future.</p>
+                    <div class="play-button">▶ Play</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="movieModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <iframe id="modalIframe"></iframe>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <h2>Account Info</h2>
+        <div class="warning" id="accountWarning">⚠️ Not logged in</div>
+        <!-- Account info could go here -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 FlixMovies. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        const movieCards = document.querySelectorAll('.movie-card');
+        const modal = document.getElementById('movieModal');
+        const modalIframe = document.getElementById('modalIframe');
+        const closeModal = document.getElementById('closeModal');
+        const sidebar = document.getElementById('sidebar');
+        const accountWarning = document.getElementById('accountWarning');
+        const profileIcon = document.getElementById('profileIcon');
+
+        function openMovie(url) {
+            modalIframe.src = url;
+            modal.style.display = 'flex';
+        }
+
+        function addToMyList(event) {
+            event.stopPropagation();
+            // Logic to add the movie to the user's "My List".
+            alert('Added to My List!');
+        }
+
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            modalIframe.src = '';
+        });
+
+        window.onclick = (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                modalIframe.src = '';
+            }
+        }
+
+        profileIcon.addEventListener('click', () => {
+            window.open(window.location.href + '/login', '_self');
+        });
+
+        // Sidebar toggle function
+        function toggleSidebar() {
+            sidebar.classList.toggle('open');
+        }
+
+        // Add sidebar toggle event
+        profileIcon.addEventListener('click', toggleSidebar);
+    </script>
+</body>
+</html>

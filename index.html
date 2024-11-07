@@ -1,5 +1,3 @@
-<link rel="shortcut icon" type="image/png" href="https://i.ibb.co/hHRmGvm/lixify-1.png">
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +13,7 @@
             box-sizing: border-box;
             font-family: 'Helvetica', sans-serif;
         }
+
         body {
             background-color: #000;
             color: #fff;
@@ -24,9 +23,6 @@
             align-items: center;
             font-family: Arial, sans-serif;
         }
-
-        /* Custom Scrollbar */
-        /* (No changes needed) */
 
         /* Header */
         .header {
@@ -39,12 +35,14 @@
             border-bottom: 2px solid #f00;
             box-shadow: 0 2px 8px rgba(255, 0, 0, 0.4);
         }
+
         .logo {
             font-size: 1.8rem;
             font-weight: bold;
             color: #f00;
             letter-spacing: 2px;
         }
+
         .nav-links a {
             color: #fff;
             margin-left: 1.5rem;
@@ -52,9 +50,11 @@
             font-size: 1.1rem;
             transition: color 0.3s;
         }
+
         .nav-links a:hover {
             color: #f00;
         }
+
         .profile-icon {
             color: #fff;
             font-size: 1.5rem;
@@ -73,6 +73,7 @@
             text-align: center;
             color: #f00;
         }
+        
         .hero-overlay {
             position: absolute;
             top: 0;
@@ -81,15 +82,18 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.7);
         }
+
         .hero-content {
             position: relative;
             z-index: 1;
             color: #fff;
         }
+
         .hero h1 {
             font-size: 4rem;
             letter-spacing: 3px;
         }
+
         .hero p {
             font-size: 1.5rem;
             margin-top: 1rem;
@@ -109,12 +113,13 @@
         /* Movie Grid */
         .movies {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjusted for Netflix sizing */
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 1.5rem;
             padding: 2rem;
             max-width: 1200px;
             width: 100%;
         }
+
         .movie-card {
             position: relative;
             overflow: hidden;
@@ -122,15 +127,18 @@
             cursor: pointer;
             background-color: #222;
         }
+
         .movie-card:hover {
             transform: scale(1.05);
             box-shadow: 0 4px 20px rgba(255, 0, 0, 0.5);
         }
+
         .movie-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+
         .movie-card-info {
             position: absolute;
             bottom: 0;
@@ -142,32 +150,79 @@
             transition: transform 0.3s ease;
             font-size: 1rem;
         }
+
         .movie-card:hover .movie-card-info {
             transform: translateY(0);
         }
+
         .movie-title {
             font-size: 1.4rem;
             margin-bottom: 0.3rem;
         }
+
         .movie-desc {
             font-size: 0.9rem;
             color: #ddd;
         }
+
         .play-button {
             font-size: 1.5rem;
             color: #f00;
-            margin-top: 0.5rem;
             cursor: pointer;
         }
 
-        /* Modal, Footer, and Other Styles */
-        /* (No changes needed) */
+        .heart-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #f00;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            width: 80%;
+            height: 80%;
+            background: #111;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: #f00;
+            cursor: pointer;
+            z-index: 1001;
+        }
 
         /* Sidebar */
         .sidebar {
             position: fixed;
-            top: 0;
-            right: -250px;
+            right: -250px; /* Offscreen */
             width: 250px;
             height: 100%;
             background: #111;
@@ -176,26 +231,39 @@
             box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
             z-index: 1002;
         }
+
         .sidebar.open {
             right: 0;
         }
+
         .sidebar h2 {
             margin-bottom: 1rem;
         }
-        .sidebar .warning {
-            color: #f00;
-            font-weight: bold;
+
+        .sidebar p {
+            margin-bottom: 0.5rem;
         }
-        .heart-icon {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: #f00;
-            cursor: pointer;
-            font-size: 1.5rem;
-            display: none; /* Hide by default */
+
+        /* Footer */
+        .footer {
+            padding: 2rem;
+            background-color: #111;
+            color: #666;
+            font-size: 0.9rem;
+            width: 100%;
+            text-align: center;
+            border-top: 2px solid #f00;
+            margin-top: 2rem;
         }
-        /* Modal & Footer continue as before! */
+
+        /* My List and Recently Watched */
+        .my-list, .recently-watched {
+            padding: 1rem;
+            width: 100%;
+            color: #fff;
+            text-align: center;
+        }
+
     </style>
 </head>
 <body>
@@ -208,7 +276,7 @@
             <a href="#">Series</a>
             <a href="#">Genres</a>
         </nav>
-        <i class="fas fa-user-circle profile-icon" id="profileIcon"></i>
+        <i class="fas fa-user-circle profile-icon" id="profileIcon" onclick="toggleSidebar()"></i>
     </header>
 
     <!-- Hero Section -->
@@ -224,28 +292,28 @@
     <section>
         <h2 class="section-title">Featured Movies</h2>
         <div class="movies">
-            <div class="movie-card" onclick="openMovie('garfield-movie-2024.html')">
+            <div class="movie-card" data-url="garfield-movie-2024.html">
                 <img src="https://th.bing.com/th/id/OIP.lF4sU8t1DdMcBBTFUelWBQAAAA?rs=1&pid=ImgDetMain" alt="Movie 1">
-                <i class="fas fa-heart heart-icon" onclick="addToMyList(event)"></i>
-                <div class="movie-card-info">
+                <i class="fas fa-heart heart-icon" onclick="addToMyList(event, 'Garfield Movie')"></i>
+                <div class="movie-card-info" onclick="openMovie('garfield-movie-2024.html')">
                     <h3 class="movie-title">Garfield Movie</h3>
                     <p class="movie-desc">A computer-animated adventure comedy film about Garfield and his reunion with his long-lost father.</p>
                     <div class="play-button">▶ Play</div>
                 </div>
             </div>
-            <div class="movie-card" onclick="openMovie('movie2.html')">
+            <div class="movie-card" data-url="movie2.html">
                 <img src="https://images.unsplash.com/photo-1512099113899-d5a4f63f6d43?auto=format&fit=crop&w=500&q=80" alt="Movie 2">
-                <i class="fas fa-heart heart-icon" onclick="addToMyList(event)"></i>
-                <div class="movie-card-info">
+                <i class="fas fa-heart heart-icon" onclick="addToMyList(event, 'Neon Skies')"></i>
+                <div class="movie-card-info" onclick="openMovie('movie2.html')">
                     <h3 class="movie-title">Neon Skies</h3>
                     <p class="movie-desc">A story of light against darkness.</p>
                     <div class="play-button">▶ Play</div>
                 </div>
             </div>
-            <div class="movie-card" onclick="openMovie('movie3.html')">
+            <div class="movie-card" data-url="movie3.html">
                 <img src="https://images.unsplash.com/photo-1543466835-00a7907eae2f?auto=format&fit=crop&w=500&q=80" alt="Movie 3">
-                <i class="fas fa-heart heart-icon" onclick="addToMyList(event)"></i>
-                <div class="movie-card-info">
+                <i class="fas fa-heart heart-icon" onclick="addToMyList(event, 'Beyond Tomorrow')"></i>
+                <div class="movie-card-info" onclick="openMovie('movie3.html')">
                     <h3 class="movie-title">Beyond Tomorrow</h3>
                     <p class="movie-desc">A journey into the unknown future.</p>
                     <div class="play-button">▶ Play</div>
@@ -254,10 +322,20 @@
         </div>
     </section>
 
+    <!-- My List and Recently Watched Sections -->
+    <div class="my-list">
+        <h2 class="section-title">My List</h2>
+        <div id="myListContainer"></div>
+    </div>
+    <div class="recently-watched">
+        <h2 class="section-title">Recently Watched</h2>
+        <div id="recentlyWatchedContainer"></div>
+    </div>
+
     <!-- Modal -->
     <div class="modal" id="movieModal">
         <div class="modal-content">
-            <span class="close-btn" id="closeModal">&times;</span>
+            <span class="close-btn" id="closeModal">×</span>
             <iframe id="modalIframe"></iframe>
         </div>
     </div>
@@ -265,34 +343,55 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <h2>Account Info</h2>
-        <div class="warning" id="accountWarning">⚠️ Not logged in</div>
-        <!-- Account info could go here -->
+        <p id="accountInfo">Not logged in</p>
+        <p id="myListInfo">My List: <span id="myListCount">0</span> movies</p>
+        <p id="recentlyWatchedInfo">Recently Watched: <span id="recentlyWatchedCount">0</span> movies</p>
     </div>
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2024 FlixMovies. All rights reserved.</p>
+        <p>© 2024 FlixMovies. All rights reserved.</p>
     </footer>
 
     <!-- JavaScript -->
     <script>
-        const movieCards = document.querySelectorAll('.movie-card');
         const modal = document.getElementById('movieModal');
         const modalIframe = document.getElementById('modalIframe');
         const closeModal = document.getElementById('closeModal');
         const sidebar = document.getElementById('sidebar');
-        const accountWarning = document.getElementById('accountWarning');
-        const profileIcon = document.getElementById('profileIcon');
+        const myListContainer = document.getElementById('myListContainer');
+        const recentlyWatchedContainer = document.getElementById('recentlyWatchedContainer');
+        
+        const myList = [];
+        const recentlyWatched = [];
 
         function openMovie(url) {
             modalIframe.src = url;
             modal.style.display = 'flex';
+            const movieTitle = url.split('-')[0]; // Extract the title from the URL for recently watched
+            recentlyWatched.push(movieTitle);
+            displayRecentlyWatched();
         }
 
-        function addToMyList(event) {
+        function addToMyList(event, movieTitle) {
             event.stopPropagation();
-            // Logic to add the movie to the user's "My List".
-            alert('Added to My List!');
+            if (!myList.includes(movieTitle)) {
+                myList.push(movieTitle);
+                alert(`${movieTitle} added to My List!`);
+            } else {
+                alert(`${movieTitle} is already in My List.`);
+            }
+            displayMyList();
+        }
+
+        function displayMyList() {
+            myListContainer.innerHTML = myList.length > 0 ? myList.join(', ') : 'Your list is empty.';
+            document.getElementById('myListCount').innerText = myList.length;
+        }
+
+        function displayRecentlyWatched() {
+            recentlyWatchedContainer.innerHTML = recentlyWatched.length > 0 ? recentlyWatched.join(', ') : 'No recently watched movies.';
+            document.getElementById('recentlyWatchedCount').innerText = recentlyWatched.length;
         }
 
         closeModal.addEventListener('click', () => {
@@ -307,17 +406,12 @@
             }
         }
 
-        profileIcon.addEventListener('click', () => {
-            window.open(window.location.href + '/login', '_self');
-        });
-
-        // Sidebar toggle function
         function toggleSidebar() {
             sidebar.classList.toggle('open');
+            // Update sidebar with account info or logout option
+            const isLoggedIn = false; // Adjust based on your login state
+            document.getElementById('accountInfo').innerText = isLoggedIn ? "Logged in as User" : "Not logged in";
         }
-
-        // Add sidebar toggle event
-        profileIcon.addEventListener('click', toggleSidebar);
     </script>
 </body>
 </html>
